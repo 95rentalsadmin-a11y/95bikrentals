@@ -6,5 +6,10 @@
     rgba(0, 212, 255, 1) 100%
   );
   background: url(./assets/bg-hero.jpg);
+  filter: brightness(1);
   background-position: center;
+}
+
+.bike-card {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

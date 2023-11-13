@@ -1,4 +1,6 @@
 import React from "react";
+import Cities from "../components/Cities";
+import Bikes from "../components/Bikes";
 
 const Home = () => {
   return (
@@ -12,38 +14,42 @@ const Home = () => {
               </h1>
             </a>
             <ul className="flex justify-end gap-8 items-center">
-              <li className="hover:bg-primaryColor text-black hover:text-white p-2 transition-all rounded-sm">
+              <li className="hover:bg-primaryColor text-black hover:text-white transition-all">
                 <a href="" className=" font-Inter font-semibold ">
                   Cities
                 </a>
               </li>
-              <li className="hover:bg-primaryColor text-black hover:text-white">
+              <li className="hover:bg-primaryColor text-black hover:text-white transition-all">
                 <a href="" className="font-Inter font-semibold">
                   Our Fleet
                 </a>
               </li>
-              <li className="hover:bg-primaryColor text-black hover:text-white">
+              <li className="hover:bg-primaryColor text-black hover:text-white transition-all">
                 <a href="" className="font-Inter font-semibold">
                   Why choose us?
                 </a>
               </li>
-              <li className="hover:bg-primaryColor text-black hover:text-white">
+              <li className="hover:bg-primaryColor text-black hover:text-white transition-all">
                 <a href="" className="font-Inter font-semibold">
                   Contact Us
                 </a>
               </li>
             </ul>
           </nav>
+          <div className="flex h-full justify-end items-center">
+            <div className="w-1/2 flex flex-col justify-center items-center">
+              <h1 className="text-5xl font-merriweather text-zinc-50 font-extrabold text-center leading-normal shadow-lg">
+                Ride in Style, Rent with Ease
+              </h1>
+              <button className="bg-lime-green py-3 px-5 my-8 rounded-full shadow-lg font-Inter font-semibold">
+                Book Now
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="px-32 py-8 h-[500px] bg-primaryColor">
-        <h2 className="text-center text-4xl font-bold">Cities</h2>
-        <div className="flex"></div>
-      </div>
-      <div className="px-32 py-8 h-[500px] bg-indigo-300">
-        <h2 className="text-center text-4xl font-bold">Bikes</h2>
-        <div className="flex"></div>
-      </div>
+      <Cities />
+      <Bikes />
       <footer></footer>
     </>
   );
