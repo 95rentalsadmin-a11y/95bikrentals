@@ -1,6 +1,7 @@
 import React from "react";
 import Cities from "../components/Cities";
 import Bikes from "../components/Bikes";
+import { FaArrowRight } from "react-icons/fa";
 
 const Home = () => {
   return (
@@ -41,8 +42,14 @@ const Home = () => {
               <h1 className="text-5xl font-merriweather text-zinc-50 font-extrabold text-center leading-normal shadow-lg">
                 Ride in Style, Rent with Ease
               </h1>
-              <button className="bg-lime-green py-3 px-5 my-8 rounded-full shadow-lg font-Inter font-semibold">
-                Book Now
+              <p className="text-white text-center font-rubik font-light text-xl">
+                Welcome to 95BikeRentals.in, where every bike is a gateway to
+                new experiences. Rent a bike and redefine the way you explore
+                the world around you.
+              </p>
+              <button className="bg-lime-green py-3 px-5 my-8 rounded-full shadow-lg font-Inter font-semibold flex items-center gap-3">
+                <span>Book Now</span>
+                <FaArrowRight />
               </button>
             </div>
           </div>
