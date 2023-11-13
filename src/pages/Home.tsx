@@ -47,7 +47,7 @@ const Home = () => {
                 new experiences. Rent a bike and redefine the way you explore
                 the world around you.
               </p>
-              <button className="bg-lime-green py-3 px-5 my-8 rounded-full shadow-lg font-Inter font-semibold flex items-center gap-3">
+              <button className="bg-lime-green py-3 px-5 my-8 rounded-full shadow-lg font-Inter font-semibold flex items-center gap-3 hover:bg-sunny-yellow transition-all">
                 <span>Book Now</span>
                 <FaArrowRight />
               </button>
