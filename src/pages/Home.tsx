@@ -12,35 +12,23 @@ const Home = () => {
               </h1>
             </a>
             <ul className="flex justify-end gap-8 items-center">
-              <li className="hover:bg-primaryColor">
-                <a
-                  href=""
-                  className="text-black font-Inter font-semibold hover:text-white"
-                >
+              <li className="hover:bg-primaryColor text-black hover:text-white p-2 transition-all rounded-sm">
+                <a href="" className=" font-Inter font-semibold ">
                   Cities
                 </a>
               </li>
-              <li className="hover:bg-primaryColor">
-                <a
-                  href=""
-                  className="text-black font-Inter font-semibold hover:text-white"
-                >
+              <li className="hover:bg-primaryColor text-black hover:text-white">
+                <a href="" className="font-Inter font-semibold">
                   Our Fleet
                 </a>
               </li>
-              <li className="hover:bg-primaryColor group-hover:text-white">
-                <a
-                  href=""
-                  className="text-black font-Inter font-semibold hover:text-white"
-                >
+              <li className="hover:bg-primaryColor text-black hover:text-white">
+                <a href="" className="font-Inter font-semibold">
                   Why choose us?
                 </a>
               </li>
-              <li className="hover:bg-primaryColor">
-                <a
-                  href=""
-                  className="text-black font-Inter font-semibold hover:text-white"
-                >
+              <li className="hover:bg-primaryColor text-black hover:text-white">
+                <a href="" className="font-Inter font-semibold">
                   Contact Us
                 </a>
               </li>
