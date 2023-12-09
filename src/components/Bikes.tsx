@@ -17,12 +17,19 @@ const Bikes = () => {
             <p className="text-gray-700">Rent Starting from ₹500/day</p>
           </div>
           <div className="flex justify-center gap-4">
-            <button className="bg-turquoise-blue px-12 py-2 rounded-full text-white hover:bg-lime-green hover:text-black transition-all">
+            <a
+              className="bg-turquoise-blue px-12 py-2 rounded-full text-white hover:bg-lime-green hover:text-black transition-all"
+              href="https://wa.me/917841942095"
+              target="_blank"
+            >
               Book now
-            </button>
-            <button className="border-2 border-coral rounded-full p-3">
+            </a>
+            <a
+              className="block md:hidden border-2 border-coral rounded-full p-3"
+              href="tel:+917841942095"
+            >
               <BiSolidPhoneCall fontSize={20} className="text-coral" />
-            </button>
+            </a>
           </div>
         </div>
         {/* <div className="bg-[#f7f7f7] pb-5 flex flex-col gap-6 rounded-2xl shadow-md bike-card">
@@ -49,13 +56,17 @@ const Bikes = () => {
           <div className="flex justify-center gap-4">
             <a
               href="https://wa.me/917841942095"
+              target="_blank"
               className="bg-turquoise-blue px-12 py-2 rounded-full text-white hover:bg-lime-green hover:text-black transition-all"
             >
               Book now
             </a>
-            <button className="border-2 border-coral rounded-full p-3">
+            <a
+              className="block md:hidden border-2 border-coral rounded-full p-3"
+              href="tel:+917841942095"
+            >
               <BiSolidPhoneCall fontSize={20} className="text-coral" />
-            </button>
+            </a>
           </div>
         </div>
       </div>
