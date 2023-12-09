@@ -19,14 +19,14 @@ const Bikes = () => {
           <div className="flex justify-center gap-4">
             <a
               className="bg-turquoise-blue px-12 py-2 rounded-full text-white hover:bg-lime-green hover:text-black transition-all"
-              href="https://wa.me/917841942095"
+              href="https://wa.me/917410192695"
               target="_blank"
             >
               Book now
             </a>
             <a
               className="block md:hidden border-2 border-coral rounded-full p-3"
-              href="tel:+917841942095"
+              href="tel:+917410192695"
             >
               <BiSolidPhoneCall fontSize={20} className="text-coral" />
             </a>
@@ -55,7 +55,7 @@ const Bikes = () => {
           </div>
           <div className="flex justify-center gap-4">
             <a
-              href="https://wa.me/917841942095"
+              href="https://wa.me/917410192695"
               target="_blank"
               className="bg-turquoise-blue px-12 py-2 rounded-full text-white hover:bg-lime-green hover:text-black transition-all"
             >
@@ -63,7 +63,7 @@ const Bikes = () => {
             </a>
             <a
               className="block md:hidden border-2 border-coral rounded-full p-3"
-              href="tel:+917841942095"
+              href="tel:+917410192695"
             >
               <BiSolidPhoneCall fontSize={20} className="text-coral" />
             </a>
