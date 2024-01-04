@@ -30,11 +30,11 @@ const Home = () => {
                   Our Fleet
                 </a>
               </li>
-              <li className="hidden md:block hover:bg-primaryColor text-black hover:text-white transition-all">
+              {/* <li className="hidden md:block hover:bg-primaryColor text-black hover:text-white transition-all">
                 <a href="#why-choose-us" className="font-Inter font-semibold">
                   Why choose us?
                 </a>
-              </li>
+              </li> */}
               <li className="hidden md:block hover:bg-primaryColor text-black hover:text-white transition-all">
                 <a href="#contact-us" className="font-Inter font-semibold">
                   Contact Us
@@ -64,7 +64,7 @@ const Home = () => {
             >
               <a href="#cities">Cities</a>
               <a href="#our-fleet">Our Fleet</a>
-              <a href="#why-choose-us">Why choose us?</a>
+              {/* <a href="#why-choose-us">Why choose us?</a> */}
               <a href="#contact-us">Contact Us</a>
             </div>
           </div>
