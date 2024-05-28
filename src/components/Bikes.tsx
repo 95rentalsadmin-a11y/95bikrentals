@@ -1,13 +1,14 @@
 import React from "react";
-import Dio from "../assets/images/dio.jpg";
+// import Dio from "../assets/images/dio.jpg";
+import shine from '../assets/images/shine_100.jpg';
 import Activa from "../assets/images/activa.jpg";
 import fascino from "../assets/images/yamaha-fascino.jpg";
 import { BiSolidPhoneCall } from "react-icons/bi";
 
 const bikes = [
   {
-    image: Dio,
-    name: "Honda Dio",
+    image: shine,
+    name: "Honda Shine 100",
     rent: 499,
   },
   {
@@ -34,9 +35,9 @@ const Bikes = () => {
       </h2>
       <div className="flex flex-col md:flex-row gap-8 my-16">
         {bikes.map((bike) => (
-          <div className="bg-[#f7f7f7] pb-5 flex flex-col gap-6 rounded-2xl shadow-md bike-card">
+          <div className="bg-[#f7f7f7] pb-5 flex flex-col gap-6 rounded-2xl shadow-md bike-card w-full">
             <img
-              style={{ minHeight: 250 }}
+              style={{ height: 250, width: '100%', objectFit: 'cover' }}
               className="bg-white rounded-tl-2xl rounded-tr-2xl"
               src={bike.image}
               alt=""
