@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const PrivacyPolicy = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-6 text-base leading-relaxed">
       {/* Go back button */}
       <div className="mb-4">
-        <Link to="/" className="text-blue-500 hover:underline flex items-center gap-x-2">
+        <Link
+          to="/"
+          className="text-blue-500 hover:underline flex items-center gap-x-2"
+        >
           <FaArrowLeftLong /> Go back
         </Link>
       </div>
