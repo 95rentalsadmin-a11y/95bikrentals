@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Contact = () => {
   return (
@@ -21,6 +22,9 @@ const Contact = () => {
             <div className="flex flex-col gap-3">
               <h5 className="font-Inter text-xl">Contact Number: </h5>
               <p>+91 7410192695</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <Link to="/privacy-policy" className="font-Inter">Privacy Policy</Link>
             </div>
           </div>
           <div className="w-full">
