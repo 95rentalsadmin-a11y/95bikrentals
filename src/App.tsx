@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// @ts-ignore: allow CSS side-effect import without type declarations
+import './App.css'
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 
