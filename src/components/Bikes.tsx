@@ -1,25 +1,40 @@
 import React from "react";
 // import Dio from "../assets/images/dio.jpg";
 import shine from '../assets/images/shine_100.jpg';
-import Activa from "../assets/images/activa.jpg";
-import fascino from "../assets/images/yamaha-fascino.jpg";
+import Activa from "../assets/images/activa_6g.png";
+import fascino from "../assets/images/fascino.jpeg";
+import Destini from "../assets/images/destini.jpeg";
+import Aether from "../assets/images/aether.jpeg";
 import { BiSolidPhoneCall } from "react-icons/bi";
 
 const bikes = [
   {
     image: shine,
-    name: "Honda Shine 100",
-    rent: 499,
+    name: "Honda Shine 100 BS6",
+    rent12hrs: 425,
+    rent24hrs: 580,
   },
   {
     image: Activa,
-    name: "Honda Activa",
-    rent: 499,
+    name: "Honda Activa BS6",
+    rent12hrs: 425,
+    rent24hrs: 580,
   },
   {
     image: fascino,
-    name: "Yamaha Fascino",
-    rent: 499,
+    name: "Yamaha Fascino BS6",
+    rent12hrs: 425,
+    rent24hrs: 580,
+  }, {
+    image: Destini,
+    name: "Hero Destini BS6 Xtec",
+    rent12hrs: 425,
+    rent24hrs: 580,
+  },{
+    image: Aether,
+    name: "Aether 450X",
+    rent12hrs: 425,
+    rent24hrs: 580,
   },
 ];
 
@@ -33,19 +48,22 @@ const Bikes = () => {
       <h2 className="text-3xl text-center font-merriweather font-bold">
         Our Fleet
       </h2>
-      <div className="flex flex-col md:flex-row gap-8 my-16">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-16">
         {bikes.map((bike) => (
           <div className="bg-[#f7f7f7] pb-5 flex flex-col gap-6 rounded-2xl shadow-md bike-card w-full">
-            <img
-              style={{ height: 250, width: '100%', objectFit: 'cover' }}
-              className="bg-white rounded-tl-2xl rounded-tr-2xl"
-              src={bike.image}
-              alt=""
-            />
+            <div className="bg-white rounded-tl-2xl rounded-tr-2xl overflow-hidden p-3">
+              <img
+                style={{ height: 250, width: '100%', objectFit: 'cover' }}
+                src={bike.image}
+                alt={bike.name}
+              />
+            </div>
             <div className="flex flex-col text-center ">
               <h6 className="font-rubik font-bold text-lg">{bike.name}</h6>
               <p className="text-gray-700">
-                Rent Starting from ₹{bike.rent}/day
+                <span>Rents:</span><br />
+                <span className="font-bold">12 Hours:</span> ₹{bike.rent12hrs} |{" "}
+                <span className="font-bold">24 Hours:</span> ₹{bike.rent24hrs}
               </p>
             </div>
             <div className="flex justify-center gap-4">
