@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useBooking } from '../../context/BookingContext';
 import BookingNavbar from '../../components/BookingNavbar';
@@ -67,10 +67,14 @@ const BookingSummary: React.FC = () => {
       .catch(() => {});
   }, []);
 
-  // Build accessories array for API calls
-  const accessoriesPayload = Object.entries(selectedAccessories)
-    .filter(([, qty]) => qty > 0)
-    .map(([accessoryId, quantity]) => ({ accessoryId, quantity }));
+  // Build accessories array for API calls (memoized to keep effect deps stable)
+  const accessoriesPayload = useMemo(
+    () =>
+      Object.entries(selectedAccessories)
+        .filter(([, qty]) => qty > 0)
+        .map(([accessoryId, quantity]) => ({ accessoryId, quantity })),
+    [selectedAccessories]
+  );
 
   // Fetch rate whenever accessories or coupon changes
   const fetchRate = useCallback(async () => {
@@ -93,7 +97,7 @@ const BookingSummary: React.FC = () => {
     } finally {
       setRateLoading(false);
     }
-  }, [bookingDetails.selectedBike, bookingDetails.startDate, bookingDetails.endDate, bookingDetails.startTime, bookingDetails.endTime, selectedAccessories, appliedCoupon]);
+  }, [bookingDetails.selectedBike, bookingDetails.startDate, bookingDetails.endDate, bookingDetails.startTime, bookingDetails.endTime, bookingDetails.packageDays, accessoriesPayload, appliedCoupon]);
 
   useEffect(() => {
     fetchRate();

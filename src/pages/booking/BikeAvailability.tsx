@@ -5,7 +5,7 @@ import DateTimePicker from '../../components/booking/DateTimePicker';
 import BookingNavbar from '../../components/BookingNavbar';
 import { calculateRate, getBikeImage, getAvailablePackages } from '../../utils/bikeData';
 import { getBikes, checkAvailabilityAll } from '../../services/api';
-import { Bike, PackageOption } from '../../types/booking';
+import { Bike } from '../../types/booking';
 import { FaArrowRight, FaCalendarAlt, FaClock, FaBicycle, FaBox } from 'react-icons/fa';
 
 const formatDate = (date: Date | null): string =>
@@ -27,6 +27,8 @@ const BikeAvailability: React.FC = () => {
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  const { startDate, endDate, startTime, endTime } = bookingDetails;
 
   useEffect(() => {
     const fetchBikes = async () => {
@@ -50,22 +52,22 @@ const BikeAvailability: React.FC = () => {
 
   // Compute duration from custom dates
   useEffect(() => {
-    if (bookingDetails.startDate && bookingDetails.endDate && bookingDetails.startTime && bookingDetails.endTime) {
-      const start = new Date(bookingDetails.startDate);
-      const [startHour, startMin] = bookingDetails.startTime.split(' ')[0].split(':').map(Number);
-      const startPeriod = bookingDetails.startTime.split(' ')[1];
+    if (startDate && endDate && startTime && endTime) {
+      const start = new Date(startDate);
+      const [startHour, startMin] = startTime.split(' ')[0].split(':').map(Number);
+      const startPeriod = startTime.split(' ')[1];
       start.setHours(startPeriod === 'PM' && startHour !== 12 ? startHour + 12 : startHour === 12 && startPeriod === 'AM' ? 0 : startHour, startMin);
 
-      const end = new Date(bookingDetails.endDate);
-      const [endHour, endMin] = bookingDetails.endTime.split(' ')[0].split(':').map(Number);
-      const endPeriod = bookingDetails.endTime.split(' ')[1];
+      const end = new Date(endDate);
+      const [endHour, endMin] = endTime.split(' ')[0].split(':').map(Number);
+      const endPeriod = endTime.split(' ')[1];
       end.setHours(endPeriod === 'PM' && endHour !== 12 ? endHour + 12 : endHour === 12 && endPeriod === 'AM' ? 0 : endHour, endMin);
 
       const diffMs = end.getTime() - start.getTime();
       const hours = diffMs / (1000 * 60 * 60);
       setDurationHours(Math.max(0, hours));
     }
-  }, [bookingDetails.startDate, bookingDetails.endDate, bookingDetails.startTime, bookingDetails.endTime]);
+  }, [startDate, endDate, startTime, endTime]);
 
   // Package mode: compute end date/time from pickup + package days
   useEffect(() => {
@@ -78,11 +80,10 @@ const BikeAvailability: React.FC = () => {
       updateEndTime(pickupTime);
       setDurationHours(selectedPackage * 24);
     }
-  }, [bookingMode, selectedPackage, pickupDate, pickupTime]);
+  }, [bookingMode, selectedPackage, pickupDate, pickupTime, updateStartDate, updateEndDate, updateStartTime, updateEndTime]);
 
   // Check availability whenever we have a valid window (both modes)
   useEffect(() => {
-    const { startDate, endDate, startTime, endTime } = bookingDetails;
     const hasValidWindow = bookingMode === 'package'
       ? selectedPackage !== null && pickupDate !== null
       : startDate && endDate && durationHours > 0;
@@ -116,7 +117,7 @@ const BikeAvailability: React.FC = () => {
     return () => {
       cancelled = true;
     };
-  }, [bikes, bookingDetails.startDate, bookingDetails.endDate, bookingDetails.startTime, bookingDetails.endTime, durationHours, bookingMode, selectedPackage, pickupDate]);
+  }, [bikes, startDate, endDate, startTime, endTime, durationHours, bookingMode, selectedPackage, pickupDate]);
 
   const handleBookNow = (bike: Bike, packageDays: number | null) => {
     const rate = packageDays

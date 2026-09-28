@@ -591,12 +591,12 @@ const Home = () => {
                 Your trusted partner for bike rentals in Nashik. Experience freedom on two wheels with our premium fleet and exceptional service.
               </p>
               <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 bg-turquoise-blue rounded-full flex items-center justify-center hover:bg-lime-green transition-all">
+                <button type="button" className="w-10 h-10 bg-turquoise-blue rounded-full flex items-center justify-center hover:bg-lime-green transition-all">
                   <FaFacebook className="text-white" />
-                </a>
-                <a href="#" className="w-10 h-10 bg-turquoise-blue rounded-full flex items-center justify-center hover:bg-lime-green transition-all">
+                </button>
+                <button type="button" className="w-10 h-10 bg-turquoise-blue rounded-full flex items-center justify-center hover:bg-lime-green transition-all">
                   <FaInstagram className="text-white" />
-                </a>
+                </button>
                 <a href="https://wa.me/917410192695" className="w-10 h-10 bg-turquoise-blue rounded-full flex items-center justify-center hover:bg-lime-green transition-all">
                   <FaWhatsapp className="text-white" />
                 </a>
@@ -633,22 +633,22 @@ const Home = () => {
               <h4 className="font-merriweather font-bold text-lg mb-6">Our Services</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-lime-green transition-all font-rubik">
+                  <a href="/booking" className="text-gray-400 hover:text-lime-green transition-all font-rubik">
                     Hourly Rentals
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-lime-green transition-all font-rubik">
+                  <a href="/booking" className="text-gray-400 hover:text-lime-green transition-all font-rubik">
                     Daily Rentals
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-lime-green transition-all font-rubik">
+                  <a href="/booking" className="text-gray-400 hover:text-lime-green transition-all font-rubik">
                     Weekly Packages
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-lime-green transition-all font-rubik">
+                  <a href="/booking" className="text-gray-400 hover:text-lime-green transition-all font-rubik">
                     Group Tours
                   </a>
                 </li>
