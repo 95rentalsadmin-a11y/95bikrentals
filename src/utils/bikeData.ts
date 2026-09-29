@@ -13,8 +13,16 @@ export const bikeImages: Record<string, string> = {
   '5': Aether,
 };
 
-export const getBikeImage = (id: string, fallback?: string): string =>
-  bikeImages[id] || fallback || shine;
+const API_HOST = (process.env.REACT_APP_API_URL || 'http://localhost:5000/api').replace('/api', '');
+
+export const getBikeImage = (id: string, fallback?: string): string => {
+  if (bikeImages[id]) return bikeImages[id];
+  // Server-hosted images (R2 via backend stream, or legacy /uploads paths)
+  if (fallback && (fallback.startsWith('/api/') || fallback.startsWith('/uploads/'))) {
+    return `${API_HOST}${fallback}`;
+  }
+  return fallback || shine;
+};
 
 export const bikesData: Bike[] = [
   {
