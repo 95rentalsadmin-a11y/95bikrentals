@@ -110,8 +110,11 @@ const BookingSummary: React.FC = () => {
   const validateForm = () => {
     const newErrors: Partial<Record<keyof BookingFormData, string>> = {};
     if (!formData.customerName.trim()) newErrors.customerName = 'Name is required';
-    if (!formData.customerPhone.trim()) newErrors.customerPhone = 'Phone is required';
+    const phone = formData.customerPhone.replace(/[\s-]/g, '');
+    if (!phone) newErrors.customerPhone = 'Phone is required';
+    else if (!/^(?:\+91|91)?[6-9]\d{9}$/.test(phone)) newErrors.customerPhone = 'Enter a valid 10-digit mobile number';
     if (!formData.customerEmail.trim()) newErrors.customerEmail = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(formData.customerEmail.trim())) newErrors.customerEmail = 'Enter a valid email address';
     if (!formData.customerAddress.trim()) newErrors.customerAddress = 'Address is required';
     if (!formData.idProof.trim()) newErrors.idProof = 'ID Proof is required';
     if (!formData.idProofFile) newErrors.idProofFile = 'ID Proof file is required';
@@ -513,7 +516,7 @@ const BookingSummary: React.FC = () => {
                 )}
                 <div className="border-t border-gray-200 pt-3 flex justify-between text-gray-600 font-Inter">
                   <span>Security Deposit (refundable)</span>
-                  <span>₹{rateData?.securityDeposit ?? 500}</span>
+                  <span>₹{rateData?.securityDeposit ?? bookingDetails.securityDeposit}</span>
                 </div>
                 <div className="bg-gradient-to-r from-lime-green to-sunny-yellow rounded-2xl p-4 mt-2">
                   <div className="flex justify-between items-center">
@@ -559,8 +562,11 @@ const BookingSummary: React.FC = () => {
                 </label>
                 <input
                   type="tel"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={10}
                   value={formData.customerPhone}
-                  onChange={(e) => setFormData({ ...formData, customerPhone: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, customerPhone: e.target.value.replace(/\D/g, '').slice(0, 10) })}
                   className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none font-Inter transition-all ${
                     errors.customerPhone ? 'border-red-500' : 'border-gray-200 focus:border-turquoise-blue'
                   }`}

@@ -13,7 +13,8 @@ export const bikeImages: Record<string, string> = {
   '5': Aether,
 };
 
-const API_HOST = (process.env.REACT_APP_API_URL || 'http://localhost:5000/api').replace('/api', '');
+const API_HOST = (process.env.REACT_APP_API_URL ||
+  (process.env.NODE_ENV === 'development' ? `http://${window.location.hostname}:5001/api` : 'http://localhost:5000/api')).replace('/api', '');
 
 export const getBikeImage = (id: string, fallback?: string): string => {
   if (bikeImages[id]) return bikeImages[id];
