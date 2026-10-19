@@ -13,6 +13,7 @@ import {
   FaSpinner,
 } from 'react-icons/fa';
 import { getMyBookings, cancelBooking, MyBooking } from '../services/api';
+import { getBikeImage } from '../utils/bikeData';
 
 const statusConfig: Record<string, { color: string; icon: React.ReactNode; label: string }> = {
   pending: { color: 'bg-yellow-100 text-yellow-800', icon: <FaHourglass />, label: 'Pending' },
@@ -127,6 +128,7 @@ const MyBookings: React.FC = () => {
               const status = statusConfig[booking.status] || statusConfig.pending;
               const payment = paymentConfig[booking.paymentStatus] || paymentConfig.pending;
               const canCancel = booking.status === 'pending' || booking.status === 'confirmed';
+              const bikeImage = getBikeImage(booking.bike?.id || '', booking.bike?.image);
 
               return (
                 <div key={booking.id} className="bg-white rounded-3xl shadow-xl overflow-hidden">
@@ -134,7 +136,7 @@ const MyBookings: React.FC = () => {
                     {/* Bike image */}
                     <div className="md:col-span-1 h-48 md:h-auto">
                       <img
-                        src={booking.bike?.image || '/images/placeholder.jpg'}
+                        src={bikeImage}
                         alt={booking.bike?.name || 'Bike'}
                         className="w-full h-full object-cover"
                       />
