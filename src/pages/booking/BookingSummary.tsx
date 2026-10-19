@@ -15,6 +15,8 @@ import {
 } from '../../services/api';
 import { FaArrowLeft, FaCheckCircle, FaWhatsapp, FaPhone, FaUpload, FaCreditCard, FaSpinner, FaPlus, FaMinus, FaTag, FaTimes } from 'react-icons/fa';
 
+const DISPLAYED_SECURITY_DEPOSIT = 500;
+
 const formatDate = (date: Date | null): string =>
   date ? new Date(date).toISOString().split('T')[0] : '';
 
@@ -192,12 +194,12 @@ const BookingSummary: React.FC = () => {
         ...prev,
         calculatedRate: response.calculatedRate,
         securityDeposit: response.securityDeposit,
-        finalTotal: response.calculatedRate + response.securityDeposit,
+        finalTotal: response.calculatedRate,
         bookingStatus: response.status,
         paymentStatus: 'whatsapp',
       }));
 
-      const message = `Hello, I would like to confirm my booking.\n\nBooking ID: ${response.id}\nBike: ${bookingDetails.selectedBike.name}\nStart: ${bookingDetails.startDate?.toLocaleDateString()} ${bookingDetails.startTime}\nEnd: ${bookingDetails.endDate?.toLocaleDateString()} ${bookingDetails.endTime}\nDuration: ${response.durationHours} hours\nTotal: ₹${response.calculatedRate}\nSecurity Deposit: ₹${response.securityDeposit}\n\nCustomer Details:\nName: ${formData.customerName}\nPhone: ${formData.customerPhone}\nEmail: ${formData.customerEmail}\nAddress: ${formData.customerAddress}\nID Proof: ${formData.idProof}`;
+      const message = `Hello, I would like to confirm my booking.\n\nBooking ID: ${response.id}\nBike: ${bookingDetails.selectedBike.name}\nStart: ${bookingDetails.startDate?.toLocaleDateString()} ${bookingDetails.startTime}\nEnd: ${bookingDetails.endDate?.toLocaleDateString()} ${bookingDetails.endTime}\nDuration: ${response.durationHours} hours\nTotal: ₹${response.calculatedRate}\nSecurity Deposit: Waived\n\nCustomer Details:\nName: ${formData.customerName}\nPhone: ${formData.customerPhone}\nEmail: ${formData.customerEmail}\nAddress: ${formData.customerAddress}\nID Proof: ${formData.idProof}`;
       const whatsappUrl = `https://wa.me/917410192695?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
       navigate('/booking/success');
@@ -239,7 +241,7 @@ const BookingSummary: React.FC = () => {
         ...prev,
         calculatedRate: booking.calculatedRate,
         securityDeposit: booking.securityDeposit,
-        finalTotal: booking.calculatedRate + booking.securityDeposit,
+        finalTotal: booking.calculatedRate,
         bookingStatus: booking.status,
         paymentStatus: 'pending',
       }));
@@ -310,9 +312,7 @@ const BookingSummary: React.FC = () => {
     navigate('/booking');
   };
 
-  const displayTotal =
-    (rateData?.calculatedRate ?? bookingDetails.calculatedRate) +
-    (rateData?.securityDeposit ?? bookingDetails.securityDeposit);
+  const displayTotal = rateData?.calculatedRate ?? bookingDetails.calculatedRate;
   const breakdown = rateData?.breakdown;
 
   return (
@@ -402,15 +402,19 @@ const BookingSummary: React.FC = () => {
                   Add Accessories
                 </h2>
                 <div className="space-y-3">
-                  {accessories.map((acc) => (
+                  {accessories.map((acc) => {
+                    const isHelmet = acc.name.toLowerCase().includes('helmet');
+                    return (
                     <div key={acc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
                       <div className="flex-1">
                         <p className="font-Inter font-semibold text-gray-800">{acc.name}</p>
                         <p className="text-sm text-gray-500 font-Inter">
-                          {acc.description || 'Add-on'} · ₹{acc.pricePerDay}/day
+                          {acc.description || 'Add-on'} · {isHelmet ? <><span className="line-through text-gray-400">₹{acc.pricePerDay}/day</span> <span className="font-semibold text-green-600">Free with bike</span></> : `₹${acc.pricePerDay}/day`}
                         </p>
                       </div>
-                      <div className="flex items-center gap-2">
+                      {isHelmet ? (
+                        <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">Included</span>
+                      ) : <div className="flex items-center gap-2">
                         <button
                           type="button"
                           onClick={() => handleAccessoryQty(acc.id, -1)}
@@ -429,9 +433,10 @@ const BookingSummary: React.FC = () => {
                         >
                           <FaPlus className="text-xs" />
                         </button>
-                      </div>
+                      </div>}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -512,8 +517,11 @@ const BookingSummary: React.FC = () => {
                   </>
                 )}
                 <div className="border-t border-gray-200 pt-3 flex justify-between text-gray-600 font-Inter">
-                  <span>Security Deposit (refundable)</span>
-                  <span>₹{rateData?.securityDeposit ?? 500}</span>
+                  <span>Security Deposit</span>
+                  <span className="flex items-center gap-2">
+                    <span className="line-through text-gray-400">₹{DISPLAYED_SECURITY_DEPOSIT}</span>
+                    <span className="font-semibold text-green-600">Waived</span>
+                  </span>
                 </div>
                 <div className="bg-gradient-to-r from-lime-green to-sunny-yellow rounded-2xl p-4 mt-2">
                   <div className="flex justify-between items-center">

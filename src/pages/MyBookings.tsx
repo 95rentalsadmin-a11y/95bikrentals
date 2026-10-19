@@ -198,7 +198,8 @@ const MyBookings: React.FC = () => {
                             <p className="text-xs text-gray-500 font-Inter">Total</p>
                             <p className="text-sm font-semibold font-Inter text-gray-800">
                               ₹{booking.calculatedRate}
-                              <span className="text-xs text-gray-500"> + ₹{booking.securityDeposit} deposit</span>
+                              <span className="text-xs text-gray-500 ml-2 line-through">+ ₹{booking.securityDeposit || 500} deposit</span>
+                              <span className="text-xs text-green-600 ml-1">waived</span>
                             </p>
                           </div>
                         </div>
