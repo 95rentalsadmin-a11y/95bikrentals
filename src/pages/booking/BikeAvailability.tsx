@@ -167,7 +167,7 @@ const BikeAvailability: React.FC = () => {
             Find Your Perfect Ride
           </h1>
           <p className="text-lg text-gray-600 font-rubik">
-            Choose a package or select custom dates
+          Choose a package and pickup time. Finalize your booking on WhatsApp.
           </p>
         </div>
 
@@ -184,6 +184,7 @@ const BikeAvailability: React.FC = () => {
             <FaBox />
             Packages
           </button>
+          {/* PARKED FOR LATER: custom date booking mode.
           <button
             onClick={() => { setBookingMode('custom'); setSelectedPackage(null); setPickupDate(null); setBookingDetails((prev) => ({ ...prev, packageDays: null })); }}
             className={`px-8 py-3 rounded-full font-Inter font-semibold flex items-center gap-2 transition-all ${
@@ -195,6 +196,7 @@ const BikeAvailability: React.FC = () => {
             <FaCalendarAlt />
             Custom Dates
           </button>
+          */}
         </div>
 
         {/* Package selection */}
@@ -214,6 +216,11 @@ const BikeAvailability: React.FC = () => {
                       : 'bg-gray-50 text-gray-700 hover:bg-gray-100 shadow'
                   }`}
                 >
+                  {days === 7 && (
+                    <span className="inline-block mb-2 px-3 py-1 rounded-full bg-sunny-yellow text-gray-800 text-xs font-bold uppercase tracking-wide">
+                      Popular
+                    </span>
+                  )}
                   <div className="text-2xl font-bold">{days} {days === 1 ? 'Day' : 'Days'}</div>
                   <div className="text-sm opacity-80 mt-1">
                     {days === 1 ? '24 hours' : `${days * 24} hours`}
@@ -249,7 +256,7 @@ const BikeAvailability: React.FC = () => {
           </div>
         )}
 
-        {/* Custom date picker */}
+        {/* PARKED FOR LATER: custom date picker flow.
         {bookingMode === 'custom' && (
           <div className="bg-white rounded-3xl shadow-2xl p-8 mb-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -286,6 +293,7 @@ const BikeAvailability: React.FC = () => {
             )}
           </div>
         )}
+        */}
 
         {/* Bike list */}
         {isSearchValid && (
@@ -372,7 +380,7 @@ const BikeAvailability: React.FC = () => {
                                     : 'bg-white text-gray-600 border border-gray-200'
                                 }`}
                               >
-                                {pkg.label}: ₹{pkg.price}
+                                {pkg.label}: ₹{pkg.price}{pkg.days === 7 ? ' · Popular' : ''}
                               </span>
                             ))}
                           </div>

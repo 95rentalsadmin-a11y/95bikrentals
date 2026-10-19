@@ -685,6 +685,7 @@ const BookingSummary: React.FC = () => {
                   {submitting ? 'Creating Booking...' : 'Book via WhatsApp'}
                 </button>
 
+                {/* PARKED FOR LATER: online Razorpay booking/payment.
                 <button
                   type="button"
                   onClick={handleRazorpayPayment}
@@ -694,6 +695,10 @@ const BookingSummary: React.FC = () => {
                   <FaCreditCard />
                   {submitting ? 'Processing...' : `Pay ₹${displayTotal} with Razorpay`}
                 </button>
+                */}
+                <p className="text-center text-sm text-gray-500 font-Inter">
+                  Your booking will be completed and confirmed through WhatsApp.
+                </p>
               </div>
 
               {submitError && (

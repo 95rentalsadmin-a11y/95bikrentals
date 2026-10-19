@@ -83,7 +83,7 @@ const Bikes = () => {
                 <h3 className="font-merriweather font-bold text-xl text-gray-800 mb-4">
                   {bike.name}
                 </h3>
-                <div className="grid grid-cols-2 gap-3 mb-6">
+                  {/* PARKED FOR LATER: 12-hour rental plan.
                   <div className="bg-gray-50 rounded-xl p-3 text-center">
                     <div className="flex items-center justify-center gap-1 text-gray-500 text-xs mb-1">
                       <FaClock />
@@ -91,6 +91,8 @@ const Bikes = () => {
                     </div>
                     <p className="font-Inter font-bold text-gray-800">₹{bike.rent12hrs}</p>
                   </div>
+                  */}
+                  <div className="grid grid-cols-1 gap-3 mb-6">
                   <div className="bg-gray-50 rounded-xl p-3 text-center">
                     <div className="flex items-center justify-center gap-1 text-gray-500 text-xs mb-1">
                       <FaClock />
@@ -103,14 +105,15 @@ const Bikes = () => {
                   <p className="px-2 pb-2 text-[11px] font-Inter font-semibold uppercase tracking-wider text-gray-400">
                     Reserve your ride
                   </p>
-                  <Link
+                  {/* PARKED FOR LATER: online booking entry point. */}
+                  {/* <Link
                     className="w-full bg-gradient-to-r from-lime-green to-sunny-yellow text-black py-3 rounded-xl font-Inter font-bold text-sm flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
                     to="/booking"
                   >
                     <FaMotorcycle />
                     <span>Book Online</span>
                     <FaArrowRight className="text-xs" />
-                  </Link>
+                  </Link> */}
                   <div className="flex items-center gap-2 my-2 text-[10px] font-Inter font-semibold uppercase tracking-widest text-gray-400">
                     <span className="h-px flex-1 bg-gray-200" />
                     <span>or book directly</span>
