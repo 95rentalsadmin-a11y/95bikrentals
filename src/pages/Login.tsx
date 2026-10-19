@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   FaMotorcycle,
   FaPhone,
@@ -10,7 +10,7 @@ import {
   FaCheckCircle,
   FaArrowRight,
 } from 'react-icons/fa';
-import { signInWithPhoneNumber, RecaptchaVerifier, ConfirmationResult, initializeRecaptchaConfig } from 'firebase/auth';
+import { signInWithPhoneNumber, RecaptchaVerifier, ConfirmationResult } from 'firebase/auth';
 import { auth, isFirebaseConfigured } from '../config/firebase';
 import { verifyCustomerToken } from '../services/api';
 
@@ -19,12 +19,14 @@ const DEV_OTP = '123456';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectPath = (location.state as { from?: string } | null)?.from || '/';
 
   useEffect(() => {
     if (localStorage.getItem('customerToken')) {
-      navigate('/home', { replace: true });
+      navigate(redirectPath, { replace: true });
     }
-  }, [navigate]);
+  }, [navigate, redirectPath]);
 
   const [mobile, setMobile] = useState('');
   const [otp, setOtp] = useState('');
@@ -33,6 +35,14 @@ const Login: React.FC = () => {
   const [error, setError] = useState('');
   const [devNote, setDevNote] = useState('');
   const confirmationResult = useRef<ConfirmationResult | null>(null);
+  const recaptchaVerifier = useRef<RecaptchaVerifier | null>(null);
+
+  useEffect(() => {
+    return () => {
+      recaptchaVerifier.current?.clear();
+      recaptchaVerifier.current = null;
+    };
+  }, []);
 
   const formatMobile = (value: string) => {
     const digits = value.replace(/\D/g, '');
@@ -43,28 +53,15 @@ const Login: React.FC = () => {
     if (!auth) return;
     const container = document.getElementById('recaptcha-container');
     if (!container) return;
-    container.innerHTML = '';
-    // Tell Firebase to use reCAPTCHA Enterprise (configured in Firebase Console)
-    try {
-      initializeRecaptchaConfig(auth);
-    } catch (e) {
-      // Already initialized — safe to ignore
-    }
-    // Disable app verification for testing (works with Firebase test phone numbers)
-    // This bypasses reCAPTCHA when using phone numbers registered as test numbers
-    // Only enabled in development — must be disabled for production with real reCAPTCHA
-    if (process.env.NODE_ENV === 'development') {
-      (auth as any).settings = (auth as any).settings || {};
-      (auth as any).settings.appVerificationDisabledForTesting = true;
-    }
-    const verifier = new RecaptchaVerifier(auth, container, {
-      size: 'invisible',
+    recaptchaVerifier.current?.clear();
+    recaptchaVerifier.current = new RecaptchaVerifier(auth, container, {
+      size: 'normal',
       callback: () => {},
       'expired-callback': () => {
         setError('reCAPTCHA expired. Please try again.');
       },
     });
-    return verifier;
+    return recaptchaVerifier.current;
   };
 
   const handleSendOTP = async (e: React.FormEvent) => {
@@ -94,6 +91,16 @@ const Login: React.FC = () => {
       setOtpSent(true);
     } catch (err: any) {
       console.error('Firebase OTP error:', err);
+      recaptchaVerifier.current?.clear();
+      recaptchaVerifier.current = null;
+      if (err?.code === 'auth/invalid-app-credential' || String(err?.message || '').includes('INVALID_APP_CREDENTIAL')) {
+        setError(
+          window.location.hostname === 'localhost'
+            ? 'Real phone login requires the deployed HTTPS website. Use a Firebase test number on localhost.'
+            : 'Firebase rejected this website credential. Check the domain and API key in Firebase Console.'
+        );
+        return;
+      }
       const errMsg = err?.code
         ? `${err.code}: ${err.message}`
         : (err?.message || 'Failed to send OTP');
@@ -126,7 +133,7 @@ const Login: React.FC = () => {
       const res = await verifyCustomerToken(idToken, formattedMobile);
       localStorage.setItem('customerToken', res.token);
       localStorage.setItem('customerMobile', res.user.mobile);
-      navigate('/home');
+      navigate(redirectPath, { replace: true });
     } catch (err: any) {
       setError(err.message || 'Invalid OTP');
     } finally {

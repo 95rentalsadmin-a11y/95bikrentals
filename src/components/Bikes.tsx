@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import shine from '../assets/images/shine_100.jpg';
 import Activa from "../assets/images/activa_6g.png";
 import fascino from "../assets/images/fascino.jpeg";
 import Destini from "../assets/images/destini.jpeg";
 import Aether from "../assets/images/aether.jpeg";
 import { BiSolidPhoneCall } from "react-icons/bi";
-import { FaMotorcycle, FaWhatsapp, FaClock } from "react-icons/fa";
+import { FaMotorcycle, FaWhatsapp, FaClock, FaArrowRight } from "react-icons/fa";
 
 const bikes = [
   {
@@ -98,22 +99,42 @@ const Bikes = () => {
                     <p className="font-Inter font-bold text-gray-800">₹{bike.rent24hrs}</p>
                   </div>
                 </div>
-                <div className="flex gap-3">
-                  <a
-                    className="flex-1 bg-gradient-to-r from-turquoise-blue to-blue-600 text-white py-3 rounded-xl font-Inter font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:scale-105 transition-all duration-300"
+                <div className="mt-6 rounded-2xl border border-gray-100 bg-gray-50 p-2">
+                  <p className="px-2 pb-2 text-[11px] font-Inter font-semibold uppercase tracking-wider text-gray-400">
+                    Reserve your ride
+                  </p>
+                  <Link
+                    className="w-full bg-gradient-to-r from-lime-green to-sunny-yellow text-black py-3 rounded-xl font-Inter font-bold text-sm flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+                    to="/booking"
+                  >
+                    <FaMotorcycle />
+                    <span>Book Online</span>
+                    <FaArrowRight className="text-xs" />
+                  </Link>
+                  <div className="flex items-center gap-2 my-2 text-[10px] font-Inter font-semibold uppercase tracking-widest text-gray-400">
+                    <span className="h-px flex-1 bg-gray-200" />
+                    <span>or book directly</span>
+                    <span className="h-px flex-1 bg-gray-200" />
+                  </div>
+                  <div className="grid grid-cols-[1fr_auto] gap-2">
+                    <a
+                      className="w-full bg-gradient-to-r from-turquoise-blue to-blue-600 text-white py-2.5 px-2 rounded-xl font-Inter font-bold text-xs flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
                     href={`https://wa.me/917410192695?text=${getWhatsappMessage(bike.name)}`}
                     target="_blank"
                     rel="noreferrer"
-                  >
-                    <FaWhatsapp />
-                    <span>Book</span>
-                  </a>
-                  <a
-                    className="w-12 flex items-center justify-center border-2 border-coral text-coral rounded-xl hover:bg-coral hover:text-white transition-all"
-                    href="tel:+917410192695"
-                  >
-                    <BiSolidPhoneCall fontSize={20} />
-                  </a>
+                    >
+                      <FaWhatsapp />
+                      <span>Book via WhatsApp</span>
+                    </a>
+                    <a
+                      className="w-11 border border-coral text-coral rounded-xl flex items-center justify-center hover:bg-coral hover:text-white transition-all"
+                      href="tel:+917410192695"
+                      aria-label="Call us"
+                      title="Call us"
+                    >
+                      <BiSolidPhoneCall fontSize={16} />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

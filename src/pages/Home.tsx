@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Cities from "../components/Cities";
 import Bikes from "../components/Bikes";
 import ProfileDropdown from "../components/ProfileDropdown";
-import { getCustomerMobile } from "../utils/auth";
+import { getCustomerMobile, isLoggedIn } from "../utils/auth";
 import { FaArrowRight, FaMotorcycle, FaMapMarkedAlt, FaShieldAlt, FaHeadset, FaWhatsapp, FaFacebook, FaInstagram, FaPhone, FaEnvelope, FaMapMarkerAlt, FaStar, FaUsers, FaClock, FaRupeeSign, FaSearchLocation, FaCalendarCheck, FaKey, FaChevronDown, FaPlayCircle, FaCheckCircle, FaBolt } from "react-icons/fa";
 import Contact from "../components/Contact";
 import Iternary from "../assets/images/iternary.jpeg";
@@ -10,6 +10,7 @@ import Iternary from "../assets/images/iternary.jpeg";
 const Home = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const loggedIn = isLoggedIn();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -88,7 +89,13 @@ const Home = () => {
                     <FaBolt />
                     <span>Book Now</span>
                   </a>
-                  <ProfileDropdown />
+                  {loggedIn ? (
+                    <ProfileDropdown />
+                  ) : (
+                    <a href="/login" className="text-white font-Inter font-semibold text-sm hover:text-lime-green transition-colors">
+                      Login
+                    </a>
+                  )}
                 </div>
 
                 <button
@@ -123,17 +130,23 @@ const Home = () => {
               <a href="/booking" onClick={() => setShowMenu(false)} className="bg-gradient-to-r from-lime-green to-sunny-yellow text-black px-8 py-3 rounded-full font-Inter font-bold flex items-center gap-2">
                 <FaBolt /> Book Now
               </a>
-              <a href="/home" onClick={() => setShowMenu(false)} className="text-white text-lg font-Inter font-semibold hover:text-lime-green transition-all">Profile</a>
-              <button
-                onClick={() => {
-                  localStorage.removeItem('customerToken');
-                  localStorage.removeItem('customerMobile');
-                  window.location.href = '/';
-                }}
-                className="text-red-400 text-lg font-Inter font-semibold"
-              >
-                Logout
-              </button>
+              {loggedIn ? (
+                <>
+                  <a href="/my-bookings" onClick={() => setShowMenu(false)} className="text-white text-lg font-Inter font-semibold hover:text-lime-green transition-all">My Bookings</a>
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem('customerToken');
+                      localStorage.removeItem('customerMobile');
+                      window.location.href = '/';
+                    }}
+                    className="text-red-400 text-lg font-Inter font-semibold"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <a href="/login" onClick={() => setShowMenu(false)} className="text-white text-lg font-Inter font-semibold hover:text-lime-green transition-all">Login</a>
+              )}
             </div>
           </div>
 
@@ -144,8 +157,8 @@ const Home = () => {
               <div className="lg:col-span-7 text-white space-y-6">
                 <div className="inline-flex items-center gap-2 bg-gradient-to-r from-lime-green/20 to-sunny-yellow/20 backdrop-blur-sm border border-lime-green/30 px-4 py-2 rounded-full font-Inter font-semibold text-sm">
                   <span className="w-2 h-2 bg-lime-green rounded-full animate-pulse" />
-                  <span className="text-lime-green">Welcome back</span>
-                  <span className="text-white/70">+91 {getCustomerMobile()}</span>
+                  <span className="text-lime-green">{loggedIn ? 'Welcome back' : 'Explore Nashik on two wheels'}</span>
+                  {loggedIn && <span className="text-white/70">+91 {getCustomerMobile()}</span>}
                 </div>
 
                 <div className="space-y-2">

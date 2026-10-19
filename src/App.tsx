@@ -16,8 +16,9 @@ function App() {
   return (
     <BookingProvider>
       <Routes>
-        <Route path="/" Component={Login} />
-        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/" Component={Home} />
+        <Route path="/login" Component={Login} />
+        <Route path="/home" Component={Home} />
         <Route path="/booking" element={<ProtectedRoute><BikeAvailability /></ProtectedRoute>} />
         <Route path="/booking/summary" element={<ProtectedRoute><BookingSummary /></ProtectedRoute>} />
         <Route path="/booking/success" element={<ProtectedRoute><BookingSuccess /></ProtectedRoute>} />

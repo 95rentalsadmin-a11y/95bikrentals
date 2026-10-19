@@ -8,6 +8,12 @@ import { getBikes, checkAvailabilityAll } from '../../services/api';
 import { Bike } from '../../types/booking';
 import { FaArrowRight, FaCalendarAlt, FaClock, FaBicycle, FaBox } from 'react-icons/fa';
 
+const getDefaultPickupDate = (): Date => {
+  const date = new Date();
+  date.setHours(0, 0, 0, 0);
+  return date;
+};
+
 const formatDate = (date: Date | null): string =>
   date ? new Date(date).toISOString().split('T')[0] : '';
 
@@ -21,8 +27,8 @@ const BikeAvailability: React.FC = () => {
   const [availabilityMap, setAvailabilityMap] = useState<Record<string, boolean>>({});
   const [checkingAvailability, setCheckingAvailability] = useState(false);
   const [bookingMode, setBookingMode] = useState<'package' | 'custom'>('package');
-  const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
-  const [pickupDate, setPickupDate] = useState<Date | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<number | null>(1);
+  const [pickupDate, setPickupDate] = useState<Date | null>(getDefaultPickupDate);
   const [pickupTime, setPickupTime] = useState<string>('10:00 AM');
 
   const today = new Date();
@@ -41,6 +47,13 @@ const BikeAvailability: React.FC = () => {
           image: getBikeImage(bike.id, bike.image),
         }));
         setBikes(withImages);
+        const availableDays = new Set<number>();
+        withImages.forEach((bike) => getAvailablePackages(bike).forEach((pkg) => availableDays.add(pkg.days)));
+        const defaultPackage = availableDays.has(1)
+          ? 1
+          : Array.from(availableDays).sort((a, b) => a - b)[0] || null;
+        setSelectedPackage((current) => current && availableDays.has(current) ? current : defaultPackage);
+        setPickupDate((current) => current || getDefaultPickupDate());
       } catch (err) {
         setBikesError(err instanceof Error ? err.message : 'Failed to load bikes');
       } finally {
@@ -161,7 +174,7 @@ const BikeAvailability: React.FC = () => {
         {/* Mode toggle */}
         <div className="flex justify-center gap-4 mb-8">
           <button
-            onClick={() => { setBookingMode('package'); setSelectedPackage(null); setPickupDate(null); }}
+            onClick={() => { setBookingMode('package'); setSelectedPackage(1); setPickupDate(getDefaultPickupDate()); }}
             className={`px-8 py-3 rounded-full font-Inter font-semibold flex items-center gap-2 transition-all ${
               bookingMode === 'package'
                 ? 'bg-turquoise-blue text-white shadow-lg'
