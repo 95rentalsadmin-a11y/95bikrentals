@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useCallback, useContext, useState, ReactNode } from 'react';
 import { BookingDetails, Bike } from '../types/booking';
 
 interface BookingContextType {
@@ -35,30 +35,30 @@ export const BookingProvider: React.FC<{ children: ReactNode }> = ({ children })
   const [bookingDetails, setBookingDetails] = useState<BookingDetails>(initialBookingDetails);
   const [bookingReference, setBookingReference] = useState<string | null>(null);
 
-  const updateStartDate = (date: Date) => {
+  const updateStartDate = useCallback((date: Date) => {
     setBookingDetails((prev) => ({ ...prev, startDate: date }));
-  };
+  }, []);
 
-  const updateEndDate = (date: Date) => {
+  const updateEndDate = useCallback((date: Date) => {
     setBookingDetails((prev) => ({ ...prev, endDate: date }));
-  };
+  }, []);
 
-  const updateStartTime = (time: string) => {
+  const updateStartTime = useCallback((time: string) => {
     setBookingDetails((prev) => ({ ...prev, startTime: time }));
-  };
+  }, []);
 
-  const updateEndTime = (time: string) => {
+  const updateEndTime = useCallback((time: string) => {
     setBookingDetails((prev) => ({ ...prev, endTime: time }));
-  };
+  }, []);
 
-  const selectBike = (bike: Bike) => {
+  const selectBike = useCallback((bike: Bike) => {
     setBookingDetails((prev) => ({ ...prev, selectedBike: bike }));
-  };
+  }, []);
 
-  const clearBooking = () => {
+  const clearBooking = useCallback(() => {
     setBookingDetails(initialBookingDetails);
     setBookingReference(null);
-  };
+  }, []);
 
   return (
     <BookingContext.Provider
